@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Container } from '@material-ui/core'
 import SearchBar from './Component/SearchBar'
 import VideoDetail from './Component/VideoDetail'
 import VideoList from './Component/VideoList'
@@ -12,6 +12,13 @@ export default class App extends Component {
   state = {
     video: [],
     selectVideo: null,
+  }
+
+  componentDidMount() {
+    this.handleSubmit('ReactJs')
+  }
+  onVideoSelect = (video) => {
+    this.setState({selectVideo: video})
   }
   
   handleSubmit = async (searchTerm) => {
@@ -31,6 +38,7 @@ export default class App extends Component {
 
   render() {
     return (
+      <Container maxWidth="lg">
       <Grid justify='center' container spacing={10}>
         <Grid item xs={12}>
           <Grid container spacing={10}>
@@ -41,11 +49,12 @@ export default class App extends Component {
               <VideoDetail  video={this.state.selectVideo}/>
             </Grid>
             <Grid item xs={4}>
-              <VideoList />
+              <VideoList videos={this.state.video} onVideoSelect={this.onVideoSelect}/>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
+      </Container>
   
     )
   }
